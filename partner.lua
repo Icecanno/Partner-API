@@ -557,7 +557,7 @@ Partner_API.Partner{
     pos = {x = 1, y = 0},
     loc_txt = {},
     atlas = "Partner",
-    config = {extra = {related_card = "j_mime", repetitions = 1}},
+    config = {extra = {related_card = "j_mime", repetitions = 1, quip_key = "mime"}},
     loc_vars = function(self, info_queue, card)
         local benefits = 1
         if next(SMODS.find_card("j_mime")) then benefits = 2 end
@@ -996,7 +996,7 @@ Partner_API.Partner{
     pos = {x = 0, y = 3},
     loc_txt = {},
     atlas = "Partner",
-    config = {extra = {related_card = "j_throwback", xmult = 1, xmult_mod = 0.5, cost = 2}},
+    config = {extra = {related_card = "j_throwback", xmult = 1, xmult_mod = 0.5, cost = 2, quip_key = "thr"}},
     loc_vars = function(self, info_queue, card)
         local benefits = 1
         if next(SMODS.find_card("j_throwback")) then benefits = 2 end

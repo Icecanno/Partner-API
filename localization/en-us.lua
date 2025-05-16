@@ -238,6 +238,7 @@ return {
             },
         },
         quips={
+            -- DEFAULT
             pnr_1={
                 "Hello,",
                 "My friend!",
@@ -264,6 +265,52 @@ return {
                 "Snowylight",
                 "Betmma",
             },
+
+            -- JUMP / THROWBACK
+            pnr_thr_1={
+                "Cool Beans"
+            },
+            pnr_thr_2={
+                "Remember, if there's a blind", 
+                "you're not digging the vibe of:",
+                "SAY NO AND SKIP!"
+            },
+            pnr_thr_3={
+                "Totally Tubular!"
+            },
+            pnr_thr_4={
+                "Gnarly!"
+            },
+            pnr_thr_5={
+                "Let's make some",
+                "bodacious plays!"
+            },
+            pnr_thr_6={
+                "Hey-yo!", 
+                "Freshest partner in town,",
+                "reporting for duty!"
+            },
+
+            -- MUTE / MIME
+            pnr_mime_1={
+                ":)"
+            },
+            pnr_mime_2={
+                ":D"
+            },
+            pnr_mime_3={
+                ":P"
+            },
+            pnr_mime_4={
+                ":I"
+            },
+            pnr_mime_5={
+                ":?"
+            },
+            pnr_mime_6={
+                ":l"
+            },
+
         },
     },
 }
