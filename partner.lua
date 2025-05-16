@@ -437,7 +437,8 @@ end
 function Card:general_partner_speech(context)
     if context.partner_setting_blind and G.GAME.round == 1 then
         G.E_MANAGER:add_event(Event({func = function()
-            self:add_partner_speech_bubble("pnr_"..math.random(1,6))
+            local quip_key = (self.ability.extra and self.ability.extra.quip_key ~= nil and self.ability.extra.quip_key.."_" ) or ""
+            self:add_partner_speech_bubble("pnr_"..quip_key..math.random(1,6))
             self:partner_say_stuff(5)
         return true end}))
     end
