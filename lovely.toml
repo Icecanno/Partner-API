@@ -5,6 +5,22 @@ priority = 0
 
 [[patches]]
 [patches.pattern]
+target = "game.lua"
+pattern = "local cardAreas = saveTable.cardAreas"
+position = "after"
+payload = '''
+if G.GAME.selected_partner then
+    local center = nil
+    for k, v in pairs(G.P_CENTER_POOLS["Partner"]) do
+        if v.key == G.GAME.selected_partner then center = v end
+    end
+    G.GAME.selected_partner_card = Card(G.deck.T.x+G.deck.T.w-G.CARD_W*0.6, G.deck.T.y-G.CARD_H*1.6, G.CARD_W*46/71, G.CARD_H*58/95, G.P_CARDS.empty, center)
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
 target = "functions/state_events.lua"
 pattern = '''-- context.final_scoring_step calculations'''
 position = "before"
