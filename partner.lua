@@ -521,7 +521,7 @@ function Game:start_run(args)
     Game_start_run_ref(self, args)
     local any_unlocked = false
     for _, v in ipairs(G.P_CENTER_POOLS.Partner) do 
-        if v.unlocked then
+        if v:is_unlocked() then
             any_unlocked = true
             break
         end
