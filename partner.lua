@@ -217,8 +217,8 @@ end
 local create_UIBox_card_unlock_ref = create_UIBox_card_unlock
 function create_UIBox_card_unlock(card_center)
     local ret = create_UIBox_card_unlock_ref(card_center)
-    local title = ret.nodes[1].nodes[1].nodes[1].nodes[1].nodes[1].nodes[1].nodes[1].nodes[1].config
     if card_center.set == "Partner" then
+        local title = ret.nodes[1].nodes[1].nodes[1].nodes[1].nodes[1].nodes[1].nodes[1].nodes[1].config
         title.object:remove()
         title.object = DynaText({string = {localize("k_partner")}, colours = {G.C.BLUE}, shadow = true, rotate = true, bump = true, pop_in = 0.3, pop_in_rate = 2, scale = 1.2})
     end
@@ -228,8 +228,8 @@ end
 local create_UIBox_notify_alert_ref = create_UIBox_notify_alert
 function create_UIBox_notify_alert(_achievement, _type)
     local ret = create_UIBox_notify_alert_ref(_achievement, _type)
-    local title = ret.nodes[1].nodes[1].nodes[2].nodes[1].nodes[1].config
     if _type == "Partner" then
+        local title = ret.nodes[1].nodes[1].nodes[2].nodes[1].nodes[1].config
         title.text = localize("k_partner")
     end
     return ret
