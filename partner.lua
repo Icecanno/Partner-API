@@ -519,7 +519,14 @@ end
 local Game_start_run_ref = Game.start_run
 function Game:start_run(args)
     Game_start_run_ref(self, args)
-    if not G.GAME.selected_partner and not G.GAME.skip_partner and Partner_API.config.enable_partner then
+    local any_unlocked = false
+    for _, v in ipairs(G.P_CENTER_POOLS.Partner) do 
+        if v.unlocked then
+            any_unlocked = true
+            break
+        end
+    end
+    if any_unlocked and not G.GAME.selected_partner and not G.GAME.skip_partner and Partner_API.config.enable_partner then
         G.E_MANAGER:add_event(Event({func = function()
             G.FUNCS.run_setup_partners_option()
         return true end}))
