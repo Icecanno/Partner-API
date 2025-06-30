@@ -3,6 +3,7 @@ version = "1.0.2c"
 dump_lua = true
 priority = 0
 
+# Hooks partners into retrigger calculations
 [[patches]]
 [patches.pattern]
 target = "functions/state_events.lua"
@@ -25,6 +26,7 @@ payload = '''
 match_indent = false
 overwrite = false
 
+# Adds cash payouts for partners
 [[patches]]
 [patches.pattern]
 target = "functions/state_events.lua"
@@ -43,6 +45,7 @@ payload = '''
 match_indent = false
 overwrite = false
 
+# Labels cash payouts for partners
 [[patches]]
 [patches.pattern]
 target = "functions/common_events.lua"
@@ -55,6 +58,7 @@ payload = '''
 match_indent = false
 overwrite = false
 
+# Hooks partners into score calculation
 [[patches]]
 [patches.pattern]
 target = "functions/state_events.lua"
@@ -117,3 +121,18 @@ end
 
 '''
 
+# adds partners to the collection counter
+# Copied from card sleeves
+# set_discover_tallies()
+[[patches]]
+[patches.pattern]
+target = 'functions/misc_functions.lua'
+pattern = """if v.set and ((v.set == 'Joker') or v.consumeable or (v.set == 'Edition') or (v.set == 'Voucher') or (v.set == 'Back') or (v.set == 'Booster')) then"""
+position = 'before'
+match_indent = true
+payload = """if v.set and v.set == 'Partner' then
+    G.DISCOVER_TALLIES.total.of = G.DISCOVER_TALLIES.total.of + 1
+    if v.unlocked then
+        G.DISCOVER_TALLIES.total.tally = G.DISCOVER_TALLIES.total.tally + 1
+    end
+end"""
