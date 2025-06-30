@@ -1,6 +1,18 @@
 return {
     descriptions = {
         Partner={
+            partner_locked_joker_stake={
+                name="Locked",
+                text={
+                    "SHOULD NOT SEE",
+                },
+                unlock={
+                    "Win a run with",
+                    "{C:attention}#2#{} on at least",
+                    "{V:1}#1#{} difficulty",
+                },
+            },
+
             pnr_partner_jimbo={
                 name = "Jimbo",
                 text = {
@@ -9,9 +21,7 @@ return {
                     "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Joker{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_mute={
@@ -21,9 +31,7 @@ return {
                     "held in hand ability",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Mime{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_mute_1={
@@ -35,8 +43,8 @@ return {
                 },
                 unlock={
                     "Win a run with",
-                    "{C:attention}Mime{} on",
-                    "{C:attention}Gold Stake{} difficulty ",
+                    "{C:attention}#2#{} on at least",
+                    "{V:1}#1#{} difficulty ",
                 },
             },
             pnr_partner_unite={
@@ -47,9 +55,7 @@ return {
                     "gives {X:mult,C:white}X#1#{} Mult",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Raised Fist{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_hatch={
@@ -60,9 +66,7 @@ return {
                     "at end of round",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Egg{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_steal={
@@ -73,9 +77,7 @@ return {
                     "gain {C:blue}+#1#{} Hands",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Buglar{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_steal_1={
@@ -85,9 +87,7 @@ return {
                     "gain {C:red}+#1#{} Discards",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Burglar{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_pale={
@@ -98,9 +98,7 @@ return {
                     "discarded",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Faceless Joker{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_penalty={
@@ -111,9 +109,7 @@ return {
                     "is skipped",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Red Card{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_penalty_1={
@@ -125,8 +121,8 @@ return {
                 },
                 unlock={
                     "Win a run with",
-                    "{C:attention}Red Card{} on",
-                    "on {C:attention}Gold Stake{} difficulty",
+                    "{C:attention}#2#{} on at least",
+                    "on {V:1}#1#{} difficulty",
                 },
             },
             pnr_partner_fantasy={
@@ -138,9 +134,7 @@ return {
                     "{C:inactive}(Must have room)",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Hallucination{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_oracle={
@@ -151,9 +145,7 @@ return {
                     "every {C:attention}#1#{C:inactive} [#2#]{} rounds",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Fortune Teller{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_oracle_1={
@@ -163,9 +155,7 @@ return {
                     "free {C:tarot,T:p_arcana_normal_1}Arcana Pack{}",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Fortune Teller{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_finesse={
@@ -176,9 +166,7 @@ return {
                     "if {C:attention}Joker{} slots are not full",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Juggler{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_finesse_1={
@@ -190,7 +178,7 @@ return {
                 unlock={
                     "Win a run with",
                     "{C:attention}Juggle{} onr",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "{V:1}#1#{} difficulty",
                 },
             },
             pnr_partner_gilded={
@@ -201,9 +189,7 @@ return {
                     "when {C:attention}Boss Blind{} is defeated",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Golden Joker{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_batter={
@@ -213,9 +199,7 @@ return {
                     "each give {C:mult}+#1#{} Mult",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Baseball Card{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_bargain={
@@ -226,9 +210,7 @@ return {
                     "it and lose {C:money}$#1#{}",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Trading Card{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_bargain_1={
@@ -239,9 +221,7 @@ return {
                     "destroy all of them",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Trading Card{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_memory={
@@ -252,9 +232,7 @@ return {
                     "becomes {C:dark_edition,T:memory_negative}Negative{}",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Flash Card{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_memory_1={
@@ -265,9 +243,7 @@ return {
                     "free and becomes {C:dark_edition,T:memory_negative}Negative{}",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Flash Card{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_stoke={
@@ -278,9 +254,7 @@ return {
                     "increase by {X:mult,C:white}X#2#{} Mult",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Campfire{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_verify={
@@ -291,9 +265,7 @@ return {
                     "to {C:attention}1{} selected card",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Certificate{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_jump={
@@ -303,9 +275,7 @@ return {
                     "when {C:attention}Blind{} is skipped",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Throwback{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_jump_1={
@@ -315,9 +285,7 @@ return {
                     "when {C:attention}Blind{} is skipped",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Throwback{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_vote={
@@ -328,9 +296,7 @@ return {
                     "used in scoring",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Hanging Chad{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_vote_1={
@@ -341,9 +307,7 @@ return {
                      "{C:attention}#1#{} additional times",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Hanging Chad{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_bleed={
@@ -354,9 +318,7 @@ return {
                     "{X:mult,C:white}X#1#{} Mult when scored",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Bloodstone{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_andrew={
@@ -366,9 +328,7 @@ return {
                     "and gain {C:red}+#2#{} Discard",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Merry Andy{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_andrew_1={
@@ -378,9 +338,7 @@ return {
                     "and draw {C:attention}#3#{} cards",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Merry Andy{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_thrill={
@@ -389,9 +347,7 @@ return {
                     "{C:chips}+#1#{} Chips",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Stuntman{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_napkin={
@@ -401,8 +357,8 @@ return {
                 },
                 unlock={
                    "Win a run with",
-                   "{C:attention}Brainstorm{} on",
-                   "{C:attention}Gold Stake{} difficulty",
+                   "{C:attention}#2#{} on at least",
+                   "{V:1}#1#{} difficulty",
                 },
             },
             pnr_partner_napkin_1={
@@ -413,9 +369,7 @@ return {
                     "of leftmost {C:attention}Joker{}",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Brainstorm{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_valid={
@@ -426,9 +380,7 @@ return {
                     "random {C:enhanced}Enhanced{} card",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Driver License{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_valid_1={
@@ -439,9 +391,7 @@ return {
                     "random {C:enhanced}Enhanced{} card",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Driver License{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
             pnr_partner_blaze={
@@ -452,9 +402,7 @@ return {
                     "{C:attention}discarded{} poker hand",
                 },
                 unlock={
-                    "Win a run with",
-                    "{C:attention}Burnt Joker{} on",
-                    "{C:attention}Gold Stake{} difficulty",
+                    "SHOULD NOT SEE",
                 },
             },
         },

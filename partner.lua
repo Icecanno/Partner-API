@@ -44,7 +44,25 @@ Partner_API.Partner = SMODS.Center:extend{
                 desc_nodes[#desc_nodes+1] = main_end
             end
         end
-    end
+    end,
+
+    locked_loc_vars = function(self, info_queue, card)
+        if self.unlock_condition.type == "partner_joker_stake" then
+            local stake_name = localize{type = 'name_text', set = 'Stake', key = G.P_CENTER_POOLS.Stake[self.unlock_condition.stake].key}
+            local joker_name = localize({ type = "name_text", key = self.unlock_condition.joker, set = "Joker" })
+            local joker_discovered = G.P_CENTERS[self.unlock_condition.joker].discovered
+            return { vars = { stake_name, joker_discovered and joker_name or localize("k_unknown"), colours = {get_stake_col(self.unlock_condition.stake)} }, key="partner_locked_joker_stake" }
+        else
+            return { }
+        end
+    end,
+    check_for_unlock = function(self, args)
+        if self.unlock_condition.type == "partner_joker_stake" then
+            if get_joker_win_sticker(G.P_CENTERS[self.unlock_condition.joker], true) >= self.unlock_condition.stake then
+                return true
+            end
+        end
+    end,
 }
 
 -- Collection Page
@@ -830,6 +848,7 @@ Partner_API.Partner{
     key = "jimbo",
     name = "Jimbo Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_joker"},
     discovered = true,
     pos = {x = 0, y = 0},
     loc_txt = {},
@@ -858,22 +877,13 @@ Partner_API.Partner{
             card_eval_status_text(card, "extra", nil, nil, nil, {message = localize("k_upgrade_ex"), colour = G.C.CHIPS})
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_joker" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "mute",
     name = "Mute Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_mime"},
     discovered = true,
     pos = {x = 1, y = 0},
     loc_txt = {},
@@ -903,22 +913,13 @@ Partner_API.Partner{
             }
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_mime" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "unite",
     name = "Unite Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_raised_fist"},
     discovered = true,
     pos = {x = 2, y = 0},
     loc_txt = {},
@@ -960,22 +961,13 @@ Partner_API.Partner{
             end
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_raised_fist" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "hatch",
     name = "Hatch Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_egg"},
     discovered = true,
     pos = {x = 3, y = 0},
     loc_txt = {},
@@ -1000,24 +992,15 @@ Partner_API.Partner{
             card_eval_status_text(card, "extra", nil, nil, nil, {message = localize("k_val_up"), colour = G.C.MONEY})
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_egg" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "steal",
     name = "Steal Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_burglar"},
     discovered = true,
-    pos = {x = 0, y = 1},
+    pos = {x = 1, y = 1},
     loc_txt = {},
     atlas = "Partner",
     config = {extra = {hands_played_mod = 2}},
@@ -1046,24 +1029,15 @@ Partner_API.Partner{
             end
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_burglar" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "pale",
     name = "Pale Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_faceless"},
     discovered = true,
-    pos = {x = 1, y = 1},
+    pos = {x = 2, y = 1},
     loc_txt = {},
     atlas = "Partner",
     config = {extra = {discard_requires = 9, current_requires = 9, discard_dollars = 6}},
@@ -1088,22 +1062,13 @@ Partner_API.Partner{
             end
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_faceless" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "penalty",
     name = "Penalty Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_red_card"},
     discovered = true,
     pos = {x = 4, y = 2},
     loc_txt = {},
@@ -1125,24 +1090,15 @@ Partner_API.Partner{
             card_eval_status_text(card, "extra", nil, nil, nil, {message = localize("$")..math.ceil(context.booster.cost/benefits), colour = G.C.MONEY})
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_red_card" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "fantasy",
     name = "Fantasy Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_hallucination"},
     discovered = true,
-    pos = {x = 2, y = 1},
+    pos = {x = 0, y = 1},
     loc_txt = {},
     atlas = "Partner",
     config = {extra = {odd = 4}},
@@ -1169,22 +1125,13 @@ Partner_API.Partner{
             end
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_hallucination" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "oracle",
     name = "Oracle Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_fortune_teller"},
     discovered = true,
     pos = {x = 3, y = 1},
     loc_txt = {},
@@ -1218,22 +1165,13 @@ Partner_API.Partner{
             end
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_fortune_teller" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "finesse",
     name = "Finesse Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_juggler"},
     discovered = true,
     pos = {x = 2, y = 4},
     loc_txt = {},
@@ -1258,22 +1196,13 @@ Partner_API.Partner{
             end
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_juggler" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "gilded",
     name = "Gilded Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_golden"},
     discovered = true,
     pos = {x = 0, y = 2},
     loc_txt = {},
@@ -1298,22 +1227,13 @@ Partner_API.Partner{
     calculate_cash = function(self, card)
         return card.ability.extra.dollars
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_golden" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "batter",
     name = "Batter Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_baseball"},
     discovered = true,
     pos = {x = 1, y = 2},
     loc_txt = {},
@@ -1337,22 +1257,13 @@ Partner_API.Partner{
             }
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_baseball" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "bargain",
     name = "Bargain Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_trading"},
     discovered = true,
     pos = {x = 2, y = 2},
     loc_txt = {},
@@ -1381,22 +1292,13 @@ Partner_API.Partner{
             end
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_trading" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "memory",
     name = "Memory Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_flash"},
     discovered = true,
     pos = {x = 3, y = 2},
     loc_txt = {},
@@ -1430,22 +1332,13 @@ Partner_API.Partner{
             card.ability.extra.first_reroll = false
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_flash" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "stoke",
     name = "Stoke Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_campfire"},
     discovered = true,
     pos = {x = 4, y = 1},
     loc_txt = {},
@@ -1480,22 +1373,13 @@ Partner_API.Partner{
             card_eval_status_text(card, "dollars", -card.ability.extra.cost)
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_campfire" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "verify",
     name = "Verify Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_certificate"},
     discovered = true,
     pos = {x = 4, y = 3},
     loc_txt = {},
@@ -1524,22 +1408,13 @@ Partner_API.Partner{
             end
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_certificate" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "jump",
     name = "Jump Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_throwback"},
     discovered = true,
     pos = {x = 0, y = 3},
     loc_txt = {},
@@ -1573,22 +1448,13 @@ Partner_API.Partner{
             card_eval_status_text(card, "extra", nil, nil, nil, {message = localize("k_duplicated_ex"), colour = G.C.GREEN})
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_throwback" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "vote",
     name = "Vote Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_hanging_chad"},
     discovered = true,
     pos = {x = 1, y = 3},
     loc_txt = {},
@@ -1617,22 +1483,13 @@ Partner_API.Partner{
             }
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_hanging_chad" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "bleed",
     name = "Bleed Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_bloodstone"},
     discovered = true,
     pos = {x = 2, y = 3},
     loc_txt = {},
@@ -1666,22 +1523,13 @@ Partner_API.Partner{
             end
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_bloodstone" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "andrew",
     name = "Andrew Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_merry_andy"},
     discovered = true,
     pos = {x = 4, y = 0},
     loc_txt = {},
@@ -1713,22 +1561,13 @@ Partner_API.Partner{
             end
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_merry_andy" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "thrill",
     name = "Thrill Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_stuntman"},
     discovered = true,
     pos = {x = 1, y = 4},
     loc_txt = {},
@@ -1753,22 +1592,13 @@ Partner_API.Partner{
             }
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_stuntman" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "napkin",
     name = "Napkin Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_brainstorm"},
     discovered = true,
     pos = {x = 4, y = 4},
     loc_txt = {},
@@ -1806,22 +1636,13 @@ Partner_API.Partner{
     calculate_begin = function(self, card)
         if G.jokers then G.jokers.config.card_limit = G.jokers.config.card_limit + 1 end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_stuntman" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "valid",
     name = "Valid Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_drivers_license"},
     discovered = true,
     pos = {x = 3, y = 4},
     loc_txt = {},
@@ -1858,22 +1679,13 @@ Partner_API.Partner{
             card.ability.extra.first_enhance = false
         end
     end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_drivers_license" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
-            end
-        end
-    end,
 }
 
 Partner_API.Partner{
     key = "blaze",
     name = "Blaze Partner",
     unlocked = false,
+    unlock_condition = {type = "partner_joker_stake", stake = 8, joker = "j_burnt"},
     discovered = true,
     pos = {x = 3, y = 3},
     loc_txt = {},
@@ -1897,16 +1709,6 @@ Partner_API.Partner{
                 update_hand_text({sound = "button", volume = 0.7, pitch = 0.8, delay = 0.3}, {handname = localize(text, "poker_hands"), chips = G.GAME.hands[text].chips, mult = G.GAME.hands[text].mult, level = G.GAME.hands[text].level})
                 level_up_hand(card, text, nil, card.ability.extra.upgrade_mod)
                 update_hand_text({sound = "button", volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = "", level = ""})
-            end
-        end
-    end,
-    check_for_unlock = function(self, args)
-        for _, v in pairs(G.P_CENTER_POOLS["Joker"]) do
-            if v.key == "j_burnt" then
-                if get_joker_win_sticker(v, true) >= 8 then
-                    return true
-                end
-                break
             end
         end
     end,
