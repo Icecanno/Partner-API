@@ -97,3 +97,23 @@ payload = '''
 '''
 match_indent = false
 overwrite = false
+
+# Add locked sprite for partners
+# Card:set_sprites
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = '''self.children.center.states.hover = self.states.hover'''
+position = 'before'
+match_indent = true
+payload = '''
+
+if _center and _center.set == "Partner" and not _center:is_unlocked() then
+    self.children.center = Sprite(self.T.x, self.T.y, G.CARD_W * 46/71, G.CARD_H * 58/95, G.ASSET_ATLAS["partner_Partner"], { x = 0, y = 4 })
+    -- For partners with non-standard size
+    self.T.h = G.CARD_H * 58/95
+    self.T.w = G.CARD_W * 46/71
+end
+
+'''
+

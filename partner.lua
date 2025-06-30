@@ -181,15 +181,6 @@ G.FUNCS.open_partner_wiki = function(e)
     love.system.openURL("https://balatromods.miraheze.org/wiki/Partner")
 end
 
-local Card_set_sprites_ref = Card.set_sprites
-function Card:set_sprites(_center, _front)
-    Card_set_sprites_ref(self, _center, _front)
-    if _center and _center.set == "Partner" and not _center:is_unlocked() then
-        self.children.center.atlas = G.ASSET_ATLAS["partner_Partner"]
-        self.children.center:set_sprite_pos({x = 0, y = 4})
-    end
-end
-
 local generate_card_ui_ref = generate_card_ui
 function generate_card_ui(_c, full_UI_table, specific_vars, card_type, badges, hide_desc, main_start, main_end, card)
     if _c and _c.set == "Partner" and _c:is_unlocked() and card_type and card_type == "Locked" and (specific_vars and not specific_vars.no_name or not specific_vars) then card_type = "Partner" end
