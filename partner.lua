@@ -576,6 +576,29 @@ function Controller:update(dt)
             self.clicked.partner_R_handled = true
         end
     end
+    if G.GAME and G.GAME.selected_partner_card and G.GAME.selected_partner_card.ability and self.cursor_hover.target and self.cursor_hover.target == G.GAME.selected_partner_card then
+        if not G.GAME.partner_pet_dist or not G.GAME.partner_pet_dist_T then
+            G.GAME.partner_pet_dist = 0
+            G.GAME.partner_pet_dist_T = {x = self.cursor_position.x, y = self.cursor_position.y}
+        elseif G.GAME.partner_pet_dist and G.GAME.partner_pet_dist_T then
+            G.GAME.partner_pet_dist = G.GAME.partner_pet_dist + Vector_Dist(G.GAME.partner_pet_dist_T, {x = self.cursor_position.x, y = self.cursor_position.y})
+            G.GAME.partner_pet_dist_T = {x = self.cursor_position.x, y = self.cursor_position.y}
+            if G.GAME.partner_pet_dist > 500 and not G.GAME.partner_pet_deal then
+                G.GAME.partner_pet_deal = true
+                local ret = G.GAME.selected_partner_card:calculate_partner({partner_pet = true})
+                if ret then
+                    SMODS.trigger_effects({{individual = ret}}, G.GAME.selected_partner_card)
+                end
+                G.E_MANAGER:add_event(Event({func = function()
+                    G.GAME.partner_pet_dist = 0
+                    G.GAME.partner_pet_deal = nil
+                return true end}))
+            end
+        end
+    elseif not self.cursor_hover.target or self.cursor_hover.target and self.cursor_hover.target ~= G.GAME.selected_partner_card and (G.GAME.partner_pet_dist or G.GAME.partner_pet_dist_T) then
+        G.GAME.partner_pet_dist = nil
+        G.GAME.partner_pet_dist_T = nil
+    end
 end
 
 function Controller:partner_R_cursor_press(x, y)
