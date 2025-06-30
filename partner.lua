@@ -125,7 +125,7 @@ G.FUNCS.your_collection_partner_page = function(args)
             c = nil
         end
     end
-    for i = 1, 4 do
+    for i = 1, math.ceil(#G.P_CENTER_POOLS["Partner"] / 8) do
         for j = 1, #G.your_collection do
             local center = G.P_CENTER_POOLS["Partner"][i+(j-1)*4+(4*#G.your_collection*(args.cycle_config.current_option-1))]
             if not center then break end
