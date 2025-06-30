@@ -1,7 +1,7 @@
 {
     "id": "partner",
     "name": "Partner",
-    "display_name": "partner",
+    "display_name": "Partner Mod",
     "author": ["baimao"],
     "description": "Add interesting partners to your Balatro. Thanks to brookling, snowylight, betmma",
     "prefix": "partner",
