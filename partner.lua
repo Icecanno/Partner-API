@@ -221,7 +221,7 @@ end
 
 function Card:add_partner_speech_bubble(forced_key)
     if not Partner_API.config.enable_speech_bubble then return end
-    if self.children.speech_bubble then self.speech_bubble_continued = true return end
+    self:remove_partner_speech_bubble()
     local align = nil
     if self.T.x+self.T.w/2 > G.ROOM.T.w/2 then align = "cl" end
     self.config.speech_bubble_align = {align = align or "cr", offset = {x=align and -0.1 or 0.1,y=0}, parent = self}
@@ -231,9 +231,18 @@ function Card:add_partner_speech_bubble(forced_key)
     }
     self.children.speech_bubble:set_role{role_type = "Minor", xy_bond = "Strong", r_bond = "Weak", major = self}
     self.children.speech_bubble.states.visible = false
+    local bubble = self.children.speech_bubble
+    G.E_MANAGER:add_event(Event({trigger = "after", delay = 0.1, func = function()
+        if self.children.speech_bubble == bubble then
+            self.children.speech_bubble.states.visible = true
+        end
+        self:partner_say_stuff(5)
+    return true end}))
     local hold_time = (G.SETTINGS.GAMESPEED*4) or 4
     G.E_MANAGER:add_event(Event({trigger = "after", delay = hold_time, blockable = false, blocking = false, func = function()
-        self:remove_partner_speech_bubble()
+        if self.children.speech_bubble == bubble then
+            self:remove_partner_speech_bubble()
+        end
     return true end}))
 end
 
@@ -252,28 +261,21 @@ function G.UIDEF.partner_speech_bubble(forced_key)
     return t
 end
 
-function Card:partner_say_stuff(n, not_first)
+function Card:partner_say_stuff(n)
     if not Partner_API.config.enable_speech_bubble then return end
-    if self.speech_bubble_continued then return end
-    if not not_first then 
-        G.E_MANAGER:add_event(Event({trigger = "after", delay = 0.1, func = function()
-            if self.children.speech_bubble then self.children.speech_bubble.states.visible = true end
-            self:partner_say_stuff(n, true)
-        return true end}))
-    else
-        if n <= 0 then return end
-        play_sound("voice"..math.random(1, 11), G.SPEEDFACTOR*(math.random()*0.2+1), 0.5)
-        self:juice_up()
-        G.E_MANAGER:add_event(Event({trigger = "after", blockable = false, blocking = false, delay = 0.13, func = function()
-            self:partner_say_stuff(n-1, true)
-        return true end}))
-    end
+    if n <= 0 then return end
+    play_sound("voice"..math.random(1, 11), G.SPEEDFACTOR*(math.random()*0.2+1), 0.5)
+    self:juice_up()
+    G.E_MANAGER:add_event(Event({trigger = "after", blockable = false, blocking = false, delay = 0.13, func = function()
+        self:partner_say_stuff(n - 1)
+    return true end}))
 end
 
-function Card:remove_partner_speech_bubble(manual)
-    if self.speech_bubble_removed then self.speech_bubble_removed = nil return end
-    if self.children.speech_bubble then self.children.speech_bubble:remove(); self.children.speech_bubble = nil; self.speech_bubble_continued = nil end
-    if manual then self.speech_bubble_removed = true end
+function Card:remove_partner_speech_bubble()
+    if self.children.speech_bubble then
+        self.children.speech_bubble:remove()
+        self.children.speech_bubble = nil
+    end
 end
 
 local Card_draw_ref = Card.draw
@@ -673,7 +675,7 @@ function Card:click()
     end
     if G.GAME.selected_partner_card and G.GAME.selected_partner_card.ability and G.GAME.selected_partner_card == self then
         if self.children.speech_bubble then
-            self:remove_partner_speech_bubble(true)
+            self:remove_partner_speech_bubble()
         elseif not G.GAME.partner_click_deal then
             G.GAME.partner_click_deal = true
             local ret = G.GAME.selected_partner_card:calculate_partner({partner_click = true})
@@ -736,98 +738,43 @@ function Card:calculate_partner(context)
     end
 end
 
+function Card:pick_quip(category)
+    if self.config.center.individual_quips then
+        local max_quips = 0
+        for k, v in pairs(G.localization.misc.quips) do
+            if string.find(k, self.config.center.key) then
+                max_quips = max_quips + 1
+            end
+        end
+        return self.config.center.key .. "_" .. math.random(1, max_quips)
+    end
+    local pool = {}
+    local pattern = category == "pet" and (
+        G.GAME.round <= 8 and "low" or (G.GAME.round <= 16 and "medium" or "high")
+    ) or (category == "ending" and "ending" or "general")
+    for k, v in pairs(G.localization.misc.quips) do
+        if string.find(k, pattern) then pool[#pool+1] = k end
+    end
+    if category == "ending" then pool[#pool+1] = "dq_1" end
+    return pseudorandom_element(pool, pseudoseed(pattern))
+end
+
 function Card:general_partner_speech(context)
     if not context or self.config.center.no_quips then return end
     if context.end_of_round and not context.individual and not context.repetition and G.GAME.blind.boss then
-        if G.GAME.no_first_pet then G.GAME.no_first_pet = nil end
+        G.GAME.no_first_pet = nil
     end
+    local quip_key = nil
     if context.partner_pet and not G.GAME.no_first_pet then
         G.GAME.no_first_pet = true
-        if self.config.center.individual_quips then
-            G.E_MANAGER:add_event(Event({func = function()
-                local max_quips = 0
-                for k, v in pairs(G.localization.misc.quips) do
-                    if string.find(k, self.config.center.key) then
-                        max_quips = max_quips + 1
-                    end
-                end
-                self:add_partner_speech_bubble(self.config.center.key.."_"..math.random(1, max_quips))
-                self:partner_say_stuff(5)
-                if self.speech_bubble_continued then G.GAME.no_first_pet = nil end
-            return true end}))
-        else
-            G.E_MANAGER:add_event(Event({func = function()
-                local low_quips, medium_quips, high_quips = {}, {}, {}
-                for k, v in pairs(G.localization.misc.quips) do
-                    if string.find(k, "low") then
-                        low_quips[#low_quips+1] = k
-                    elseif string.find(k, "medium") then
-                        medium_quips[#medium_quips+1] = k
-                    elseif string.find(k, "high") then
-                        high_quips[#high_quips+1] = k
-                    end
-                end
-                if G.GAME.round <= 8 then
-                    self:add_partner_speech_bubble(pseudorandom_element(low_quips, pseudoseed("low")))
-                elseif G.GAME.round <= 16 then
-                    self:add_partner_speech_bubble(pseudorandom_element(medium_quips, pseudoseed("medium")))
-                else
-                    self:add_partner_speech_bubble(pseudorandom_element(high_quips, pseudoseed("high")))
-                end
-                self:partner_say_stuff(5)
-                if self.speech_bubble_continued then G.GAME.no_first_pet = nil end
-            return true end}))
-        end
+        quip_key = self:pick_quip("pet")
+    elseif context.setting_blind and G.GAME.round == 1 then
+        quip_key = self:pick_quip("round1")
+    elseif context.setting_blind and context.blind.boss and G.GAME.round_resets.ante == G.GAME.win_ante then
+        quip_key = self:pick_quip("ending")
     end
-    if context.setting_blind and G.GAME.round == 1 then
-        if self.config.center.individual_quips then
-            G.E_MANAGER:add_event(Event({func = function()
-                local max_quips = 0
-                for k, v in pairs(G.localization.misc.quips) do
-                    if string.find(k, self.config.center.key) then
-                        max_quips = max_quips + 1
-                    end
-                end
-                self:add_partner_speech_bubble(self.config.center.key.."_"..math.random(1, max_quips))
-                self:partner_say_stuff(5)
-            return true end}))
-        else
-            G.E_MANAGER:add_event(Event({func = function()
-                local general_quips = {}
-                for k, v in pairs(G.localization.misc.quips) do
-                    if string.find(k, "general") then
-                        general_quips[#general_quips+1] = k
-                    end
-                end
-                self:add_partner_speech_bubble(pseudorandom_element(general_quips, pseudoseed("general")))
-                self:partner_say_stuff(5)
-            return true end}))
-        end
-    end
-    if context.setting_blind and context.blind.boss and G.GAME.round_resets.ante == G.GAME.win_ante then
-        if self.config.center.individual_quips then
-            G.E_MANAGER:add_event(Event({func = function()
-                local max_quips = 0
-                for k, v in pairs(G.localization.misc.quips) do
-                    if string.find(k, self.config.center.key) then
-                        max_quips = max_quips + 1
-                    end
-                end
-                self:add_partner_speech_bubble(self.config.center.key.."_"..math.random(1, max_quips))
-                self:partner_say_stuff(5)
-            return true end}))
-        else
-            G.E_MANAGER:add_event(Event({func = function()
-                local ending_quips = {"dq_1"}
-                for k, v in pairs(G.localization.misc.quips) do
-                    if string.find(k, "ending") then
-                        ending_quips[#ending_quips+1] = k
-                    end
-                end
-                self:add_partner_speech_bubble(pseudorandom_element(ending_quips, pseudoseed("ending")))
-                self:partner_say_stuff(5)
-            return true end}))
-        end
+    if quip_key then
+        self:add_partner_speech_bubble(quip_key)
     end
 end
 
@@ -895,6 +842,28 @@ end
 
 function Partner_API.process_loc_text()
     G.localization.descriptions.Partner = G.localization.descriptions.Partner or {}
+end
+
+Partner_API.inject = function(partner_key, path, value, mode)
+    mode = mode or "merge"
+    local target
+    for _, p in pairs(G.P_CENTER_POOLS["Partner"]) do
+        if p.key == partner_key then target = p; break end
+    end
+    if not target then return end
+    local keys = {}
+    for k in string.gmatch(path, "[^%.]+") do keys[#keys+1] = k end
+    local parent = target
+    for i = 1, #keys - 1 do parent = parent[keys[i]] end
+    local last = keys[#keys]
+    if mode == "del" then
+        parent[last] = nil
+    elseif mode == "set" then
+        parent[last] = value
+    else
+        parent[last] = parent[last] or {}
+        for k, v in pairs(value) do parent[last][k] = v end
+    end
 end
 
 -- Atlas Page
