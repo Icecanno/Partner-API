@@ -8,7 +8,7 @@
     "main_file": "partner.lua",
     "priority": -10,
     "badge_colour": "366999",
-    "version": "1.0.2g",
+    "version": "1.0.2h",
     "dependencies": [
         "Steamodded (>=1.0.0~BETA-0323b)",
         "Lovely (>=0.6)",
