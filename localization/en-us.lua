@@ -510,6 +510,10 @@ return {
             },
         },
         quips={
+            ending_1={
+                "Forward to achieve greatness!",
+                "Forward until dawn!",
+            },
             general_1={
                 "Hello,",
                 "My friend!",
